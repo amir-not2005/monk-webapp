@@ -1,10 +1,10 @@
 # monk-webapp
 
-** Goal  
+## Goal  
 Create a monk mode web application to be used in groups  
   
 
-** Technologies  
+## Technologies  
 *Frontend and Backend division with API*  
 1. Frontend: React js
     - Tailwind CSS / Material UI
