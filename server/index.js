@@ -21,6 +21,16 @@ app.get("/api/people", (req, res) => {
         name: "Altair",
         age: "11",
       },
+      {
+        id: "2",
+        name: "Altair",
+        age: "11",
+      },
+      {
+        id: "2",
+        name: "Altair",
+        age: "11",
+      },
     ],
   });
 });
