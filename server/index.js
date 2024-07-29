@@ -10,10 +10,6 @@ app.use(cors());
 app.use(express.json());
 app.use("/api", usersRouter);
 
-app.get("/api/people", (req, res) => {
-  return;
-});
-
 app.listen(port, () => {
   console.log(`Server is listening on ${port}`);
 });
