@@ -8,7 +8,7 @@ const navLinksHtml = navLinks.map(navItem => {
 const Navbar = () => {
   return (
     <header>
-        <nav className='p-2 flex flex-row justify-evenly items-center flex-wrap bg-slate-600'>
+        <nav className='p-2 flex flex-row justify-evenly items-center flex-wrap bg-primary'>
             {navLinksHtml}
         </nav>
     </header>

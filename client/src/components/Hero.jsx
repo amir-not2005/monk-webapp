@@ -6,7 +6,7 @@ import { heroText } from '../constants/constants'
 const Hero = () => {
   return (
     <section className='bg-black flex items-center justify-center h-screen'>
-      <div className='max-w-screen-lg py-5 px-2 grid grid-cols-12 my-auto mx-auto'>
+      <div className='max-w-screen-lg px-5 grid grid-cols-12 my-auto mx-auto'>
         <div className='sm:col-span-8 col-span-12'>
           <h1 className='text-white font-extrabold text-5xl mb-5'>{heroText[0].title}</h1>
           <p className='text-white text-1xl font-medium mb-5'>{heroText[0].content}</p>
