@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 const Form = () => {
   const [formData, setFormData] = React.useState({
@@ -16,10 +17,18 @@ const Form = () => {
     });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
-    // API TO DATABASE
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3500/api/users",
+        formData
+      );
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   }
 
   return (
@@ -47,7 +56,10 @@ const Form = () => {
           className="mt-2 w-[200px] text-white bg-black border-white border-2 rounded-md py-1.5 px-3 text-center placeholder-white text-lg focus:placeholder-transparent"
         />
 
-        <button className="mt-5 w-[100px] text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 rounded-full px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <button
+          type="submit"
+          className="mt-5 w-[100px] text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 rounded-full px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
           Submit
         </button>
       </form>
