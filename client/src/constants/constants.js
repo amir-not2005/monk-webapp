@@ -2,18 +2,22 @@
 export const navLinks = [
   {
     id: "title",
+    linkTo: "/",
     title: "MonkMates",
   },
   {
     id: "features",
+    linkTo: "",
     title: "Features",
   },
   {
     id: "login",
+    linkTo: "/auth",
     title: "Login",
   },
   {
     id: "register",
+    linkTo: "/auth",
     title: "Start for free",
   },
 ];
