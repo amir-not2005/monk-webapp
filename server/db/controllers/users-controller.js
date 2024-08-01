@@ -1,5 +1,6 @@
 const db = require("../db");
 const bcrypt = require("bcrypt");
+const { json } = require("express");
 const jwt = require("jsonwebtoken");
 
 function generateJwt(id, login) {
@@ -35,25 +36,29 @@ class usersController {
 
     const token = generateJwt(newUser.rows[0].id, newUser.rows[0].login);
 
-    res.status(200).json(token);
+    return res.status(200).json(token);
   }
 
-  async loginUser(req, res) {
-    const id = req.params.id;
-    const user = await db.query(`SELECT * FROM users WHERE id = $1`, [id]);
-    res.json({
-      success: "true",
-      data: user.rows[0],
-    });
+  async loginUser(req, res, next) {
+    const { login, password } = req.body;
+    const user = await db.query(`SELECT * FROM users WHERE login = $1`, [
+      login,
+    ]);
+    if (!user.rows[0]) {
+      return next(res.status(404).json("No such user, please register"));
+    }
+    let comparePassword = bcrypt.compareSync(password, user.rows[0].password);
+    if (!comparePassword) {
+      return next(res.status(404).json("Check login or password"));
+    }
+
+    const token = generateJwt(user.rows[0].id, user.rows[0].login);
+    return res.status(200).json(token);
   }
 
   async authUser(req, res) {
-    const id = req.params.id;
-    const user = await db.query(`SELECT * FROM users WHERE id = $1`, [id]);
-    res.json({
-      success: "true",
-      data: user.rows[0],
-    });
+    const token = generateJwt(req.user.id, req.user.login);
+    return res.status(200).json({ token });
   }
 }
 

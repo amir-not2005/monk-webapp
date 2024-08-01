@@ -16,15 +16,12 @@ _Frontend and Backend division with API_
    - Node js
 3. API
    - Express js
-   - JWT Auth, Roles
+   - JWT Auth
 4. Database
    - PostgreSQL
 
 ## Todo
 
-1. Users db API
-   - validation
-   - hashing
-   - JWT auth
 2. db API
-   - 3 more Dbs' endpoints
+   - endpointsss for goals
+   - eps for groups, goal_completion
