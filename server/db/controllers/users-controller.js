@@ -1,28 +1,44 @@
 const db = require("../db");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+function generateJwt(id, login) {
+  return jwt.sign(
+    {
+      id: id,
+      login: login,
+    },
+    process.env.SECRET_KEY,
+    { expiresIn: "24h" }
+  );
+}
 
 class usersController {
-  async createUser(req, res) {
+  async registerUser(req, res, next) {
     const { login, password } = req.body;
+
+    // Check if User already exists
+    const candidate = await db.query(`SELECT * FROM users WHERE login = $1`, [
+      login,
+    ]);
+    if (candidate.rows[0]) {
+      console.log(candidate.rows);
+      return next(res.status(200).json("User already exists"));
+    }
+
+    // Hash password and create User
+    const hashPassword = await bcrypt.hash(password, 5);
     const newUser = await db.query(
       `INSERT INTO users (login, password) VALUES ($1, $2) RETURNING *`,
-      [login, password]
+      [login, hashPassword]
     );
 
-    res.json({
-      success: "true",
-      data: newUser.rows[0],
-    });
+    const token = generateJwt(newUser.rows[0].id, newUser.rows[0].login);
+
+    res.status(200).json(token);
   }
 
-  async getAllUsers(req, res) {
-    const allUsers = await db.query("SELECT * FROM users");
-    res.json({
-      success: "true",
-      data: allUsers.rows,
-    });
-  }
-
-  async getUser(req, res) {
+  async loginUser(req, res) {
     const id = req.params.id;
     const user = await db.query(`SELECT * FROM users WHERE id = $1`, [id]);
     res.json({
@@ -31,29 +47,70 @@ class usersController {
     });
   }
 
-  async updateUser(req, res) {
-    const { id, login, password } = req.body;
-    const updatedUser = await db.query(
-      `UPDATE users SET login = $1, password = $2 WHERE id = $3 RETURNING *`,
-      [login, password, id]
-    );
-    res.json({
-      success: "true",
-      data: updatedUser.rows[0],
-    });
-  }
-
-  async deleteUser(req, res) {
+  async authUser(req, res) {
     const id = req.params.id;
-    const deletedUser = await db.query(
-      `DELETE FROM users WHERE id = $1 RETURNING *`,
-      [id]
-    );
+    const user = await db.query(`SELECT * FROM users WHERE id = $1`, [id]);
     res.json({
       success: "true",
-      data: deletedUser.rows[0],
+      data: user.rows[0],
     });
   }
 }
 
 module.exports = new usersController();
+
+// class usersController {
+//   async createUser(req, res) {
+//     const { login, password } = req.body;
+//     const newUser = await db.query(
+//       `INSERT INTO users (login, password) VALUES ($1, $2) RETURNING *`,
+//       [login, password]
+//     );
+
+//     res.json({
+//       success: "true",
+//       data: newUser.rows[0],
+//     });
+//   }
+
+//   async getAllUsers(req, res) {
+//     const allUsers = await db.query("SELECT * FROM users");
+//     res.json({
+//       success: "true",
+//       data: allUsers.rows,
+//     });
+//   }
+
+//   async getUser(req, res) {
+//     const id = req.params.id;
+//     const user = await db.query(`SELECT * FROM users WHERE id = $1`, [id]);
+//     res.json({
+//       success: "true",
+//       data: user.rows[0],
+//     });
+//   }
+
+//   async updateUser(req, res) {
+//     const { id, login, password } = req.body;
+//     const updatedUser = await db.query(
+//       `UPDATE users SET login = $1, password = $2 WHERE id = $3 RETURNING *`,
+//       [login, password, id]
+//     );
+//     res.json({
+//       success: "true",
+//       data: updatedUser.rows[0],
+//     });
+//   }
+
+//   async deleteUser(req, res) {
+//     const id = req.params.id;
+//     const deletedUser = await db.query(
+//       `DELETE FROM users WHERE id = $1 RETURNING *`,
+//       [id]
+//     );
+//     res.json({
+//       success: "true",
+//       data: deletedUser.rows[0],
+//     });
+//   }
+// }
