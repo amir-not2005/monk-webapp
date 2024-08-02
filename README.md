@@ -23,5 +23,4 @@ _Frontend and Backend division with API_
 ## Todo
 
 2. db API
-   - eps groups
    - eps goal_completion
