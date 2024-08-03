@@ -17,6 +17,7 @@ CREATE TABLE goals(
     title varchar(50) NOT NULL,
     description varchar(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    end_at DATE,
     category varchar(50),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -24,6 +25,7 @@ CREATE TABLE goals(
 CREATE TABLE goal_completion(
     id SERIAL PRIMARY KEY,
     goal_id INT NOT NULL,
-    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    completion_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    commentary varchar(255),
     FOREIGN KEY (goal_id) REFERENCES goals(id)
 );

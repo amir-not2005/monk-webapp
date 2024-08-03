@@ -22,5 +22,5 @@ _Frontend and Backend division with API_
 
 ## Todo
 
-2. db API
-   - eps goal_completion
+1. db API
+   - Basic frontend **No design at least for now!!! KEEP IT SIMPLE**
