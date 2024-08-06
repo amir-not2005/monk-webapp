@@ -1,8 +1,8 @@
 import React from "react";
-import Form from "../components/Form";
+import Authorization from "../components/Authorization";
 
 const Auth = () => {
-  return <Form />;
+  return <Authorization authType={"login"} />;
 };
 
 export default Auth;
