@@ -12,8 +12,15 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const Sidebar = () => {
+const Sidebar = ({ pageName }) => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
+  const menuItems = [
+    { name: "Profile", url: "http://localhost:3000/profile" },
+    { name: "Group", url: "http://localhost:3000/group" },
+    { name: "Dashboard", url: "http://localhost:3000/dashboard" },
+    { name: "Log Out", url: "http://localhost:3000/auth" },
+  ];
 
   return (
     <>
@@ -27,7 +34,7 @@ const Sidebar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            MonkMates
+            MonkMates - {pageName}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -43,11 +50,11 @@ const Sidebar = () => {
             Menu
           </Typography>
           <List>
-            {["Profile", "Group", "Habits"].map((menuItem) => {
+            {menuItems.map(({ name, url }) => {
               return (
                 <ListItem style={{ padding: "0px" }}>
-                  <ListItemButton style={{ padding: "10px 18px" }}>
-                    {menuItem}
+                  <ListItemButton style={{ padding: "10px 18px" }} href={url}>
+                    {name}
                   </ListItemButton>
                 </ListItem>
               );

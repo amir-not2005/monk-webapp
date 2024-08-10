@@ -22,5 +22,23 @@ _Frontend and Backend division with API_
 
 ## Todo
 
-1. db API
-   - Basic frontend **No design at least for now!!! KEEP IT SIMPLE**
+1. Dashboard
+
+   - _add habit button_
+   - _weekdays roulette_
+   - _strek and completion info_
+
+2. Group
+
+   - _group members card display_
+   - _delete from group_
+   - _group calendar_
+
+3. Login / Logout
+
+   - _Link to db_
+   - _Link to JWT auth_
+
+4. Profile page
+   - _design_
+   - _backend_

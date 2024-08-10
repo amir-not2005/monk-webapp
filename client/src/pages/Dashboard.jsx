@@ -8,7 +8,7 @@ import HabitBar from "../components/HabitBar";
 const Dashboard = () => {
   return (
     <Box>
-      <Sidebar />
+      <Sidebar pageName="Dashboard" />
       <Box p={4}>
         <HabitBar />
         <Divider style={{ margin: "10px 0px" }} />
