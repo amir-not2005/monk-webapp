@@ -24,9 +24,10 @@ _Frontend and Backend division with API_
 
 1. Dashboard
 
+   - _calendar functioning_
    - _add habit button_
    - _weekdays roulette_
-   - _strek and completion info_
+   - _streak and completion info_
 
 2. Group
 
@@ -34,11 +35,11 @@ _Frontend and Backend division with API_
    - _delete from group_
    - _group calendar_
 
-3. Login / Logout
-
-   - _Link to db_
-   - _Link to JWT auth_
-
-4. Profile page
+3. Profile page
    - _design_
    - _backend_
+
+~~Login / Logout~~
+
+- ~~Link to db~~
+- ~~Link to JWT auth~~

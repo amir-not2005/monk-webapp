@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -8,13 +9,50 @@ import {
   Button,
   Grid,
   Link,
+  Alert,
 } from "@mui/material";
 import LockPersonOutlinedIcon from "@mui/icons-material/LockPersonOutlined";
+import axios from "axios";
 
 const Authorization = (props) => {
-  function handleSubmit() {
-    return;
-  }
+  const navigate = useNavigate();
+
+  const [authType, setAuthType] = useState(props.authType);
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleAuth = async (formAuthType, e) => {
+    e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    try {
+      let url = "";
+      formAuthType === "login"
+        ? (url = "http://localhost:3500/api/users/login")
+        : (url = "http://localhost:3500/api/users/registration");
+      const response = await axios.post(url, {
+        login,
+        password,
+      });
+      console.log(response.status);
+      if (response.status !== 200) {
+        setError(response.data);
+      } else {
+        setSuccess(
+          authType === "login"
+            ? "Login successful!"
+            : "Registration successful!"
+        );
+        localStorage.setItem("token", response.data);
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      setError(err.response.data || "Registration failed");
+    }
+  };
 
   return (
     <Container
@@ -44,10 +82,10 @@ const Authorization = (props) => {
             </Avatar>
 
             <Typography component="h1" variant="h5">
-              {props.authType === "login" ? "Login" : "Register"}
+              {authType === "login" ? "Login" : "Register"}
             </Typography>
 
-            <Box component="form" onSubmit={handleSubmit}>
+            <Box component="form" onSubmit={(e) => handleAuth(authType, e)}>
               <TextField
                 margin="normal"
                 required
@@ -57,6 +95,8 @@ const Authorization = (props) => {
                 name="noEmail"
                 autoComplete="a1"
                 autoFocus
+                value={login}
+                onChange={(e) => setLogin(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -67,6 +107,8 @@ const Authorization = (props) => {
                 name="noPassword"
                 autoComplete="a2"
                 autoFocus
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Button
                 type="submit"
@@ -74,18 +116,48 @@ const Authorization = (props) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                {props.authType === "login" ? "Login" : "Register"}
+                {authType === "login" ? "Login" : "Register"}
               </Button>
+
+              {error && (
+                <Alert severity="error" style={{ margin: "10px 0px" }}>
+                  {error}
+                </Alert>
+              )}
+              {success && (
+                <Alert severity="success" style={{ margin: "10px 0px" }}>
+                  {success}
+                </Alert>
+              )}
+
               <Grid container>
-                <Grid item xs>
+                <Grid item xs={6}>
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
-                {props.authType === "login" && (
-                  <Grid item>
-                    <Link href="#" variant="body2">
-                      {"Don't have an account? Register"}
+                {authType === "login" ? (
+                  <Grid item xs>
+                    <Link
+                      href="#"
+                      onClick={() =>
+                        setAuthType(authType === "login" ? "register" : "login")
+                      }
+                      variant="body2"
+                    >
+                      "Don't have an account? Register"
+                    </Link>
+                  </Grid>
+                ) : (
+                  <Grid item xs={6}>
+                    <Link
+                      href="#"
+                      onClick={() =>
+                        setAuthType(authType === "login" ? "register" : "login")
+                      }
+                      variant="body2"
+                    >
+                      "Have an account? Login"
                     </Link>
                   </Grid>
                 )}

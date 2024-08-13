@@ -24,7 +24,7 @@ class usersController {
     ]);
     if (candidate.rows[0]) {
       console.log(candidate.rows);
-      return next(res.status(200).json("User already exists"));
+      return next(res.status(409).json("User already exists"));
     }
 
     // Hash password and create User
