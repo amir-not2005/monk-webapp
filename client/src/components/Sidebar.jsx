@@ -52,7 +52,7 @@ const Sidebar = ({ pageName }) => {
           <List>
             {menuItems.map(({ name, url }) => {
               return (
-                <ListItem style={{ padding: "0px" }}>
+                <ListItem style={{ padding: "0px" }} key={name}>
                   <ListItemButton style={{ padding: "10px 18px" }} href={url}>
                     {name}
                   </ListItemButton>

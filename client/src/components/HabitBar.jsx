@@ -31,7 +31,7 @@ const HabitBar = () => {
             ["7", "S"],
           ].map((weekDay) => {
             return (
-              <ListItem style={{ padding: "0px" }}>
+              <ListItem style={{ padding: "0px" }} key={weekDay[0]}>
                 <ListItemButton
                   style={{
                     display: "flex",

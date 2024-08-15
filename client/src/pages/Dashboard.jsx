@@ -13,7 +13,7 @@ const Dashboard = () => {
         <HabitBar />
         <Divider style={{ margin: "10px 0px" }} />
         <Grid container spacing={2}>
-          <Grid xs={6} sm={8}>
+          <Grid item xs={6} sm={8}>
             <Goals />
           </Grid>
           <Grid item xs={6} sm={4}>

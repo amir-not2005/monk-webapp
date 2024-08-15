@@ -23,16 +23,16 @@ const Authorization = (props) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleAuth = async (formAuthType, e) => {
+  const handleAuth = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
     try {
       let url = "";
-      formAuthType === "login"
-        ? (url = "http://localhost:3500/api/users/login")
-        : (url = "http://localhost:3500/api/users/registration");
+      authType === "login"
+        ? (url = `${REACT_APP_API_URL}/users/login`)
+        : (url = `${REACT_APP_API_URL}/users/registration`);
       const response = await axios.post(url, {
         login,
         password,
@@ -85,7 +85,7 @@ const Authorization = (props) => {
               {authType === "login" ? "Login" : "Register"}
             </Typography>
 
-            <Box component="form" onSubmit={(e) => handleAuth(authType, e)}>
+            <Box component="form" onSubmit={handleAuth}>
               <TextField
                 margin="normal"
                 required

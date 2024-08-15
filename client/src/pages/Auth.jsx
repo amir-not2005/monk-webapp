@@ -8,7 +8,6 @@ const Auth = () => {
   // If yes, then I return the login page
 
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -18,24 +17,23 @@ const Auth = () => {
     if (!token) {
       // Handle the case where there is no token
       setError("No token found, please log in.");
-      setLoading(false);
 
       return;
     }
 
     axios
-      .get("http://localhost:3500/api/users/auth", {
+      .get(`${REACT_APP_API_URL}/users/auth`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         setData(response.data);
-        setLoading(false);
+        const token = localStorage.setItem(data);
+        console.log("TOKEN:", token);
       })
       .catch((error) => {
         setError(error);
-        setLoading(false);
       });
   }, []);
 

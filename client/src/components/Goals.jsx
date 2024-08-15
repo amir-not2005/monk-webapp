@@ -12,11 +12,11 @@ const Goals = () => {
     <Box component="main">
       {[
         { title: "Read 20 pages", daysOfTheWeek: ["Wed", "Friday", "Sunday"] },
-        { title: "Read 20 pages", daysOfTheWeek: ["Wed", "Friday", "Sunday"] },
-        { title: "Read 20 pages", daysOfTheWeek: ["Wed", "Friday", "Sunday"] },
+        { title: "Read 30 pages", daysOfTheWeek: ["Wed", "Friday", "Sunday"] },
+        { title: "Read 40 pages", daysOfTheWeek: ["Wed", "Friday", "Sunday"] },
       ].map((habit) => {
         return (
-          <Card style={{ margin: "16px 0px" }}>
+          <Card style={{ margin: "16px 0px" }} key={habit.title}>
             <CardActionArea>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
