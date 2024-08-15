@@ -1,15 +1,19 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Auth from "./pages/Auth";
+import Dashboard from "./pages/Dashboard";
+import Group from "./pages/Group";
 
-export default function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/group" element={<Group />} />
       </Routes>
     </BrowserRouter>
   );
-}
+};
+
+export default App;
