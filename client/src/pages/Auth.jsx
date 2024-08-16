@@ -3,44 +3,42 @@ import Authorization from "../components/Authorization";
 import axios from "axios";
 
 const Auth = () => {
-  // First I check if the user has bearer token
-  // If not, then I return the register page where user can login if needed
-  // If yes, then I return the login page
-
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const [authType, setAuthType] = useState("register");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("TOKEN:", token);
+    console.log("Current token from localStorage:", token);
 
     if (!token) {
-      // Handle the case where there is no token
-      setError("No token found, please log in.");
-
-      return;
+      console.log("No token found in localStorage, showing register page.");
+    } else {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/users/auth`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log("API Response Data:", response.data);
+          // Assuming the token is in response.data.token
+          if (response.data.token) {
+            localStorage.setItem("token", response.data.token);
+            console.log("Token valid, setting authType to 'login'.");
+            setAuthType("login");
+          } else {
+            console.log(
+              "No valid token found in API response, showing register page."
+            );
+            setAuthType("register");
+          }
+        })
+        .catch((error) => {
+          console.log("Error during token verification:", error);
+          setAuthType("register");
+        });
     }
-
-    axios
-      .get(`${REACT_APP_API_URL}/users/auth`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setData(response.data);
-        const token = localStorage.setItem(data);
-        console.log("TOKEN:", token);
-      })
-      .catch((error) => {
-        setError(error);
-      });
   }, []);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <Authorization authType={"register"} />;
-
-  return <Authorization authType={"login"} />;
+  return <Authorization authType={authType} setAuthType={setAuthType} />;
 };
 
 export default Auth;

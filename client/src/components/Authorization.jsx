@@ -17,7 +17,7 @@ import axios from "axios";
 const Authorization = (props) => {
   const navigate = useNavigate();
 
-  const [authType, setAuthType] = useState(props.authType);
+  const { authType, setAuthType } = props;
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -31,26 +31,23 @@ const Authorization = (props) => {
     try {
       let url = "";
       authType === "login"
-        ? (url = `${REACT_APP_API_URL}/users/login`)
-        : (url = `${REACT_APP_API_URL}/users/registration`);
+        ? (url = `${process.env.REACT_APP_API_URL}/users/login`)
+        : (url = `${process.env.REACT_APP_API_URL}/users/registration`);
       const response = await axios.post(url, {
         login,
         password,
       });
-      console.log(response.status);
-      if (response.status !== 200) {
-        setError(response.data);
-      } else {
-        setSuccess(
-          authType === "login"
-            ? "Login successful!"
-            : "Registration successful!"
-        );
-        localStorage.setItem("token", response.data);
-        navigate("/dashboard");
-      }
+      console.log(response.data);
+
+      setSuccess(
+        authType === "login" ? "Login successful!" : "Registration successful!"
+      );
+      localStorage.setItem("token", response.data);
+      console.log("changed token to ", response.data);
+      //navigate("/dashboard");
     } catch (err) {
-      setError(err.response.data || "Registration failed");
+      setError(err || "Registration failed");
+      console.log(err);
     }
   };
 
