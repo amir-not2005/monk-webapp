@@ -1,8 +1,8 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../../components/Sidebar";
 import { Box, Divider } from "@mui/material";
-import GroupCalendar from "../components/GroupCalendar";
-import Friends from "../components/Friends";
+import GroupCalendar from "./GroupCalendar";
+import Friends from "./Friends";
 
 const Group = ({ groupName }) => {
   return (

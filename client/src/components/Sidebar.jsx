@@ -11,15 +11,15 @@ import {
   Toolbar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { DASHBOARD_ROUTE, GROUP_ROUTE, LOGIN_ROUTE } from "../utils/constants";
 
 const Sidebar = ({ pageName }) => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
   const menuItems = [
-    { name: "Profile", url: "http://localhost:3000/profile" },
-    { name: "Group", url: "http://localhost:3000/group" },
-    { name: "Dashboard", url: "http://localhost:3000/dashboard" },
-    { name: "Log Out", url: "http://localhost:3000/auth" },
+    { name: "Group", url: GROUP_ROUTE },
+    { name: "Dashboard", url: DASHBOARD_ROUTE },
+    { name: "Log Out", url: LOGIN_ROUTE },
   ];
 
   return (
