@@ -1,9 +1,9 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
-import Goals from "../components/Goals";
-import GoalStats from "../components/GoalStats";
+import Sidebar from "../../components/Sidebar";
+import Goals from "./Goals";
+import GoalStats from "./GoalStats";
 import { Box, Divider, Grid } from "@mui/material";
-import HabitBar from "../components/HabitBar";
+import HabitBar from "./HabitBar";
 
 const Dashboard = () => {
   return (
