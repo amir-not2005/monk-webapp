@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import ActionButton from "../components/ActionButton";
+import ActionButton from "../../components/ActionButton";
 import { Add as AddIcon } from "@mui/icons-material";
 
 import React from "react";
