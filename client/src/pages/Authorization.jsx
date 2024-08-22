@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -12,26 +12,46 @@ import {
   Alert,
 } from "@mui/material";
 import LockPersonOutlinedIcon from "@mui/icons-material/LockPersonOutlined";
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/constants";
+import {
+  DASHBOARD_ROUTE,
+  LOGIN_ROUTE,
+  REGISTRATION_ROUTE,
+} from "../utils/constants";
 import NavBar from "../components/NavBar";
 import { registration, loggin } from "../http/userApi";
+import { observer } from "mobx-react-lite";
+import { Context } from "..";
 
-const Authorization = () => {
+const Authorization = observer(() => {
+  const { user } = useContext(Context);
   const navigate = useNavigate();
   const location = useLocation();
   const isLogin = location.pathname === LOGIN_ROUTE;
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const handleAuth = async (e) => {
+    let userData;
     e.preventDefault();
-    if (isLogin) {
-      const response = await loggin(login, password);
-      console.log("LOGIN:", response);
-    } else {
-      const response = await registration(login, password);
-      console.log("REGISTRATION:", response);
+    try {
+      if (isLogin) {
+        userData = await loggin(login, password);
+        console.log("LOGIN:", userData);
+      } else {
+        userData = await registration(login, password);
+        console.log("REGISTRATION:", userData);
+      }
+      user.setUser(user);
+      user.setIsAuth(true);
+      setError(false);
+      setTimeout(() => {
+        navigate(DASHBOARD_ROUTE);
+      }, 2000);
+    } catch (e) {
+      setError(e.response.data);
+      console.log("ERROR WHILE REGISTERING:", e);
     }
   };
 
@@ -103,16 +123,16 @@ const Authorization = () => {
                   {isLogin ? "Login" : "Register"}
                 </Button>
 
-                {/* {error && (
-                <Alert severity="error" style={{ margin: "10px 0px" }}>
-                  {error}
-                </Alert>
-              )}
-              {success && (
-                <Alert severity="success" style={{ margin: "10px 0px" }}>
-                  {success}
-                </Alert>
-              )} */}
+                {error && (
+                  <Alert severity="error" style={{ margin: "10px 0px" }}>
+                    {error}
+                  </Alert>
+                )}
+                {error === false && (
+                  <Alert severity="success" style={{ margin: "10px 0px" }}>
+                    Success! Redirecting to the user's dashboard.
+                  </Alert>
+                )}
 
                 <Grid container>
                   <Grid item xs={6}>
@@ -164,6 +184,6 @@ const Authorization = () => {
       </Container>
     </>
   );
-};
+});
 
 export default Authorization;

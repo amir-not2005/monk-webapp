@@ -35,21 +35,22 @@ Frontend:
 
 ## Todo
 
-1. Authentication (isAuthenticated)
+1. ~~Authentication (isAuthenticated)~~
+2. ~~Axios functions to access api endpoints for frontend~~
 
-2. Dashboard
+3. Dashboard
 
    - _calendar functioning_
    - _add habit button_
    - _weekdays roulette_
    - _streak and completion info_
 
-3. Group
+4. Group
 
    - _group members card display_
    - _delete from group_
    - _group calendar_
 
-4. Profile page
+5. Profile page
    - _design_
    - _backend_

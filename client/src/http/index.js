@@ -9,7 +9,9 @@ const $hostAuth = axios.create({
 });
 
 const authInterceptor = (config) => {
-  config.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
+  const token = localStorage.getItem("token");
+  config.headers.authorization = "Bearer " + token;
+  console.log("HTTP INDEX JS BEARER:", config.headers.authorization);
   return config;
 };
 

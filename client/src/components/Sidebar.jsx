@@ -12,14 +12,23 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { DASHBOARD_ROUTE, GROUP_ROUTE, LOGIN_ROUTE } from "../utils/constants";
+import { observer } from "mobx-react-lite";
+import { Context } from "../index";
 
-const Sidebar = ({ pageName }) => {
+const Sidebar = observer(({ pageName }) => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+
+  const { user } = React.useContext(Context);
+  function logOut() {
+    user.setIsAuth(false);
+    user.setUser({});
+    localStorage.setItem("token", null);
+  }
 
   const menuItems = [
     { name: "Group", url: GROUP_ROUTE },
     { name: "Dashboard", url: DASHBOARD_ROUTE },
-    { name: "Log Out", url: LOGIN_ROUTE },
+    { name: "Log Out", url: LOGIN_ROUTE, onClick: logOut },
   ];
 
   return (
@@ -50,11 +59,15 @@ const Sidebar = ({ pageName }) => {
             Menu
           </Typography>
           <List>
-            {menuItems.map(({ name, url }) => {
+            {menuItems.map((menuItem) => {
               return (
-                <ListItem style={{ padding: "0px" }} key={name}>
-                  <ListItemButton style={{ padding: "10px 18px" }} href={url}>
-                    {name}
+                <ListItem style={{ padding: "0px" }} key={menuItem.name}>
+                  <ListItemButton
+                    style={{ padding: "10px 18px" }}
+                    href={menuItem.url}
+                    onClick={menuItem.onClick}
+                  >
+                    {menuItem.name}
                   </ListItemButton>
                 </ListItem>
               );
@@ -64,6 +77,6 @@ const Sidebar = ({ pageName }) => {
       </Drawer>
     </>
   );
-};
+});
 
 export default Sidebar;
