@@ -40,8 +40,8 @@ Frontend:
 
 3. Dashboard
 
+   - ~~add habit button~~
    - _calendar functioning_
-   - _add habit button_
    - _weekdays roulette_
    - _streak and completion info_
 

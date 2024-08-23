@@ -109,7 +109,6 @@ const Authorization = observer(() => {
                   label="Password"
                   name="noPassword"
                   autoComplete="a2"
-                  autoFocus
                   value={password}
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}

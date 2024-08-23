@@ -5,16 +5,24 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getAllGoals } from "../../http/goalsApi";
 
 const Goals = () => {
+  const [goals, setGoals] = useState([]);
+  console.log(goals);
+
+  useEffect(() => {
+    async function fetchData() {
+      const responseData = await getAllGoals();
+      setGoals(responseData);
+    }
+    fetchData();
+  }, []);
+
   return (
     <Box component="main">
-      {[
-        { title: "Read 20 pages", daysOfTheWeek: ["Wed", "Friday", "Sunday"] },
-        { title: "Read 30 pages", daysOfTheWeek: ["Wed", "Friday", "Sunday"] },
-        { title: "Read 40 pages", daysOfTheWeek: ["Wed", "Friday", "Sunday"] },
-      ].map((habit) => {
+      {goals?.map((habit) => {
         return (
           <Card style={{ margin: "16px 0px" }} key={habit.title}>
             <CardActionArea>
@@ -22,8 +30,17 @@ const Goals = () => {
                 <Typography gutterBottom variant="h5" component="div">
                   {habit.title}
                 </Typography>
+                <Typography gutterBottom variant="body1" component="div">
+                  {habit.description}
+                </Typography>
+                <Typography gutterBottom variant="body1" component="div">
+                  {habit.category}
+                </Typography>
+                <Typography gutterBottom variant="body1" component="div">
+                  {habit.end_at.split("T")[0]}
+                </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {habit.daysOfTheWeek.map((dayOfTheWeek) => {
+                  {habit.daysOfTheWeek?.map((dayOfTheWeek) => {
                     return dayOfTheWeek + " ";
                   })}
                 </Typography>
