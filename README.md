@@ -41,8 +41,11 @@ Frontend:
 3. Dashboard
 
    - ~~add habit button~~
-   - _calendar functioning_
    - _weekdays roulette_
+     - Data fetching
+     - What date user has chosen
+     - Change chosen date color
+   - _calendar functioning_
    - _streak and completion info_
 
 4. Group
