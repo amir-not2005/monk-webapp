@@ -61,6 +61,7 @@ const HabitBar = () => {
                         weekDay.today ? "#757ce8" : "inherit"
                       }`,
                     }}
+                    //onClick={handleWeekDayButton}
                   >
                     <Typography>{weekDay.day}</Typography>
                     <Typography>{weekDay.week}</Typography>

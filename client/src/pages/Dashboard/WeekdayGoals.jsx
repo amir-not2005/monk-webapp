@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Card,
@@ -6,12 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
 
-const Goals = observer(({ goals }) => {
+const WeekdayGoals = observer(({ goals }) => {
+  console.log("WeekdayGoals rendered");
   return (
     <Box component="main">
-      <Typography variant="h5">All your goals:</Typography>
+      <Typography variant="h5">All your goals for THIS week day:</Typography>
       {goals.allGoals.constructor === Array ? (
         goals.allGoals.map((habit) => {
           return (
@@ -50,4 +51,4 @@ const Goals = observer(({ goals }) => {
   );
 });
 
-export default Goals;
+export default WeekdayGoals;

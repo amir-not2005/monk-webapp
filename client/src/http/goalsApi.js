@@ -1,10 +1,17 @@
 import { $hostAuth } from "./index";
 
-export const createGoal = async (title, description, end_at, category = "") => {
+export const createGoal = async (
+  title,
+  description,
+  end_at,
+  weekdays,
+  category = ""
+) => {
   const { data } = await $hostAuth.post("goals/create", {
     title,
     description,
     end_at,
+    weekdays,
     category,
   });
   console.log("CREATED GOAL DATA:", data);
@@ -28,12 +35,14 @@ export const updateGoal = async (
   title,
   description,
   end_at,
+  weekdays,
   category = ""
 ) => {
   const { data } = await $hostAuth.put("goals/" + id, {
     title,
     description,
     end_at,
+    weekdays,
     category,
   });
   console.log("UPDATED GOAL DATA:", data);

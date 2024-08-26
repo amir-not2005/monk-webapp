@@ -2,7 +2,7 @@ const db = require("../db");
 
 class goalsController {
   async createGoal(req, res) {
-    const { title, description, end_at, category = "" } = req.body;
+    const { title, description, end_at, weekdays, category = "" } = req.body;
 
     let userId;
     try {
@@ -14,8 +14,8 @@ class goalsController {
 
     try {
       const newGoal = await db.query(
-        `INSERT INTO goals (user_id, title, description, category, end_at, created_at ) VALUES ($1, $2, $3, $4, $5, to_timestamp(${Date.now()} / 1000.0)) RETURNING *`,
-        [userId, title, description, category, end_at]
+        `INSERT INTO goals (user_id, title, description, category, end_at, weekdays, created_at ) VALUES ($1, $2, $3, $4, $5, $6, to_timestamp(${Date.now()} / 1000.0)) RETURNING *`,
+        [userId, title, description, category, end_at, weekdays]
       );
       return res.status(200).json(newGoal.rows[0]);
     } catch (e) {
@@ -83,7 +83,14 @@ class goalsController {
   }
 
   async updateGoal(req, res) {
-    const { id, title, description, end_at, category = "" } = req.body;
+    const {
+      id,
+      title,
+      description,
+      end_at,
+      weekdays,
+      category = "",
+    } = req.body;
 
     let userId;
     try {
@@ -95,8 +102,8 @@ class goalsController {
 
     try {
       const updatedGoal = await db.query(
-        `UPDATE goals SET title = $1, description = $2, category = $3, end_at = $4 WHERE user_id = $5 AND id = $6 RETURNING *`,
-        [title, description, category, end_at, userId, id]
+        `UPDATE goals SET title = $1, description = $2, category = $3, end_at = $4, weekdays = $5 WHERE user_id = $6 AND id = $7 RETURNING *`,
+        [title, description, category, end_at, weekdays, userId, id]
       );
 
       if (updatedGoal.rows.length === 0) {

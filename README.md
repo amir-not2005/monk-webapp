@@ -42,7 +42,7 @@ Frontend:
 
    - ~~add habit button~~
    - _weekdays roulette_
-     - Data fetching
+     - Data fetching from HabitBar by weekdays
      - What date user has chosen
      - Change chosen date color
    - _calendar functioning_

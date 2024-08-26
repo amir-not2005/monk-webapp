@@ -20,7 +20,7 @@ import {
 import NavBar from "../components/NavBar";
 import { registration, loggin } from "../http/userApi";
 import { observer } from "mobx-react-lite";
-import { Context } from "..";
+import { Context } from "../index";
 
 const Authorization = observer(() => {
   const { user } = useContext(Context);
