@@ -1,14 +1,18 @@
-// {
-//     '0': { week: 'Wed', day: '21' },
-//     '1': { week: 'Thu', day: '22' },
-//     '2': { week: 'Fri', day: '23' },
-//     '3': { week: 'Sat', day: '24' },
-//     '4': { week: 'Sun', day: '25' },
-//     '5': { week: 'Mon', day: '26' },
-//     '6': { week: 'Tue', day: '27' }
-// }
-
 const dayjs = require("dayjs");
+
+const dayMap = {
+  Sun: "Sunday",
+  Mon: "Monday",
+  Tue: "Tuesday",
+  Wed: "Wednesday",
+  Thu: "Thursday",
+  Fri: "Friday",
+  Sat: "Saturday",
+};
+
+function getFullDayName(shortName) {
+  return dayMap[shortName];
+}
 
 const dayOfTheWeek = {
   0: "Sun",
@@ -62,4 +66,4 @@ function getWeekDayRoulette(weekOffset = 0) {
   return weekDays;
 }
 
-module.exports = getWeekDayRoulette;
+module.exports = { getWeekDayRoulette, getFullDayName };

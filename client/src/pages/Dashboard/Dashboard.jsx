@@ -28,7 +28,7 @@ const Dashboard = observer(() => {
     <Box>
       <Sidebar pageName="Dashboard" />
       <Box p={4}>
-        <HabitBar />
+        <HabitBar goals={goals} />
         <Divider style={{ margin: "10px 0px" }} />
         <Grid container spacing={2}>
           <Grid item xs={6} sm={8}>

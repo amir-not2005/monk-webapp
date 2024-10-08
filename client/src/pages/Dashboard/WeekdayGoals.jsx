@@ -12,9 +12,9 @@ const WeekdayGoals = observer(({ goals }) => {
   console.log("WeekdayGoals rendered");
   return (
     <Box component="main">
-      <Typography variant="h5">All your goals for THIS week day:</Typography>
-      {goals.allGoals.constructor === Array ? (
-        goals.allGoals.map((habit) => {
+      <Typography variant="h5">All your goals for THIS week day :</Typography>
+      {goals.weekDayGoals.constructor === Array ? (
+        goals.weekDayGoals.map((habit) => {
           return (
             <Card style={{ margin: "16px 0px" }} key={habit.title}>
               <CardActionArea>

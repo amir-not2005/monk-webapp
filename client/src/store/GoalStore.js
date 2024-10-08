@@ -11,7 +11,7 @@ export default class GoalStore {
     this._allGoals = allGoals;
   }
 
-  weekDayGoals(weekDayGoals) {
+  setWeekDayGoals(weekDayGoals) {
     this._weekDayGoals = weekDayGoals;
   }
 

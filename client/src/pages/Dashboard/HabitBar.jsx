@@ -10,12 +10,16 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ActionButton from "../../components/ActionButton";
 import { Add as AddIcon } from "@mui/icons-material";
 
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import HabitModal from "./HabitModal";
 
-const getWeekDayRoulette = require("./weekDayRoulette");
+import { observer } from "mobx-react-lite";
+import { getAllGoals } from "../../http/goalsApi";
+import { Context } from "../../index";
 
-const HabitBar = () => {
+const { getWeekDayRoulette, getFullDayName } = require("./weekDayRoulette");
+
+const HabitBar = observer(({ goals }) => {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const handleAddHabit = () => {
@@ -39,6 +43,20 @@ const HabitBar = () => {
     }
   };
 
+  const handleWeekDayButton = (event) => {
+    const weekDayHabits = [];
+    const fullDayName = getFullDayName(
+      event.currentTarget.innerText.split("\n\n")[1]
+    );
+    const regex = new RegExp(fullDayName, "i");
+    goals.allGoals.forEach((goal) => {
+      if (regex.test(goal.weekdays)) {
+        weekDayHabits.push(goal);
+      }
+    });
+
+    goals.setWeekDayGoals(weekDayHabits);
+  };
   return (
     <>
       <Box display="flex" justifyContent="space-between" gap="5px">
@@ -61,7 +79,7 @@ const HabitBar = () => {
                         weekDay.today ? "#757ce8" : "inherit"
                       }`,
                     }}
-                    //onClick={handleWeekDayButton}
+                    onClick={handleWeekDayButton}
                   >
                     <Typography>{weekDay.day}</Typography>
                     <Typography>{weekDay.week}</Typography>
@@ -83,6 +101,6 @@ const HabitBar = () => {
       <HabitModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </>
   );
-};
+});
 
 export default HabitBar;
