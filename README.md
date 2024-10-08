@@ -41,8 +41,8 @@ Frontend:
 3. Dashboard
 
    - ~~add habit button~~
-   - _weekdays roulette_
-     - Data fetching from HabitBar by weekdays
+   - ~~weekdays roulette~~
+     - ~~Data fetching from HabitBar by weekdays~~
      - What date user has chosen
      - Change chosen date color
    - _calendar functioning_
