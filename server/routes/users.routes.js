@@ -2,8 +2,18 @@ const Router = require("express");
 const router = new Router();
 const usersController = require("../db/controllers/users-controller");
 const authMiddleware = require("../middleware/authMiddleware");
+const { body } = require("express-validator");
 
-router.post("/registration", usersController.registerUser);
+router.post(
+  "/registration",
+  body("login").isEmail().withMessage("Email must be accurate"),
+  body("password")
+    .isLength({ min: 3 })
+    .withMessage("Password is too short")
+    .isLength({ max: 32 })
+    .withMessage("Password is too long"),
+  usersController.registerUser
+);
 router.post("/login", usersController.loginUser);
 router.get("/auth", authMiddleware, usersController.authUser); // For JWT token
 

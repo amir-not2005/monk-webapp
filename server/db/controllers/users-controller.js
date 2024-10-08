@@ -2,6 +2,7 @@ const db = require("../db");
 const bcrypt = require("bcrypt");
 const { json } = require("express");
 const jwt = require("jsonwebtoken");
+const { validationResult } = require("express-validator");
 
 function generateJwt(id, login) {
   return jwt.sign(
@@ -16,6 +17,15 @@ function generateJwt(id, login) {
 
 class usersController {
   async registerUser(req, res, next) {
+    const validationErrors = validationResult(req);
+    let validationErrorText = "";
+    if (!validationErrors.isEmpty()) {
+      validationErrors.errors.forEach((element) => {
+        validationErrorText += `${element.msg}\n `;
+      });
+      return next(res.status(400).json(validationErrorText));
+    }
+
     const { login, password } = req.body;
 
     // Check if User already exists
